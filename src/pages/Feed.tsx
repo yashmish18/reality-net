@@ -1,9 +1,7 @@
 import { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
 import { useWallet } from '../contexts/WalletContext'
 import PostCard from '../components/PostCard'
 import MintTokenButton from '../components/MintTokenButton'
-import { api } from '../services/api'
 import { stakeForVerification } from '../services/aptos'
 import { checkRealBalance } from '../services/realToken'
 

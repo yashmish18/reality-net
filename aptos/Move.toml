@@ -3,7 +3,7 @@ name = "RealityNet"
 version = "1.0.0"
 
 [addresses]
-realitynet = "0x3df1b91e01acffa234d7824f03937bf98fc5cc254d580ac6290796ac5a2b7705"
+realitynet = ""
 std = "0x1"
 
 [dependencies.AptosFramework]
@@ -20,4 +20,6 @@ subdir = "aptos-move/framework/aptos-token"
 git = "https://github.com/aptos-labs/aptos-core.git"
 rev = "mainnet"
 subdir = "aptos-move/framework/aptos-stdlib"
+
+
 

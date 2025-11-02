@@ -1,7 +1,15 @@
 # Deploy RealityNet Contract to Devnet
+# IMPORTANT: If you get "Generic error" or "MintStore not found", you need a NEW address
+# The coin was already initialized at the old address, so MintStore can't be created there
+# Generate a new address by creating a new profile or using a different account
+
 $MODULE_ADDRESS = "0x3df1b91e01acffa234d7824f03937bf98fc5cc254d580ac6290796ac5a2b7705"
 
 Write-Host "🚀 Deploying RealityNet Contract to Aptos Devnet" -ForegroundColor Cyan
+Write-Host "📍 Module Address: $MODULE_ADDRESS" -ForegroundColor Yellow
+Write-Host ""
+Write-Host "⚠️  NOTE: If minting fails after deployment, you may need a NEW module address" -ForegroundColor Red
+Write-Host "   (The coin was already initialized, so MintStore might not exist)" -ForegroundColor Red
 Write-Host ""
 
 # Navigate to Move directory

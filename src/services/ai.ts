@@ -6,11 +6,7 @@ interface EventAnalysis {
   recommendations: string[]
 }
 
-export async function analyzeEvent(
-  description: string,
-  mediaHash: string,
-  location: { lat: number; lng: number },
-): Promise<EventAnalysis> {
+export async function analyzeEvent(): Promise<EventAnalysis> {
   // AI analysis simulation (replace with actual AI service)
   return {
     authenticity_score: Math.random() * 40 + 60, // 60-100

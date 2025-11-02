@@ -6,13 +6,6 @@ export default function Navbar() {
   const location = useLocation()
   const { address, connected, connect, disconnect } = useWallet()
 
-  const navItems = [
-    { path: '/', label: 'Home' },
-    { path: '/upload', label: 'Upload Reality' },
-    { path: '/explore', label: 'Explore' },
-    { path: '/dao', label: 'DAO' },
-    { path: '/profile', label: 'Profile' },
-  ]
 
   return (
     <nav className="fixed top-0 w-full z-50 glass border-b border-white/20">

@@ -12,7 +12,7 @@ function Timeline3D({ events }: { events: any[] }) {
       <OrbitControls enableZoom={true} enablePan={true} />
       <PerspectiveCamera makeDefault position={[0, 5, 10]} />
       
-      {events.map((event, i) => {
+      {events.map((_, i) => {
         const angle = (i / events.length) * Math.PI * 2
         const radius = 5
         const x = Math.cos(angle) * radius

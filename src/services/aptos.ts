@@ -2,8 +2,6 @@ import { Aptos, Account } from '@aptos-labs/ts-sdk'
 import { getModuleId } from './contracts'
 
 export async function mintRealityNFT(
-  aptos: Aptos,
-  accountAddress: string,
   mediaHash: string,
   ipfsCID: string,
   latitude: number,
@@ -55,7 +53,6 @@ export async function mintRealityNFT(
 }
 
 export async function stakeForVerification(
-  aptos: Aptos,
   accountAddress: string,
   amount: number,
   tokenId: string,
@@ -182,8 +179,6 @@ const ensureDevnetNetwork = async (wallet: any) => {
 }
 
 export async function createDAOProposal(
-  aptos: Aptos,
-  accountAddress: string,
   title: string,
   description: string,
 ): Promise<string> {

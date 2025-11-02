@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useWallet } from '../contexts/WalletContext'
-import { Heart, MessageCircle, Share2, TrendingUp, TrendingDown, CheckCircle2, XCircle } from 'lucide-react'
+import { Heart, MessageCircle, TrendingUp, TrendingDown, CheckCircle2, XCircle } from 'lucide-react'
 
 interface PostCardProps {
   post: {

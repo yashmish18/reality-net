@@ -94,8 +94,7 @@ export async function mintRealTokens(amount: number = 1000000000000): Promise<st
     }
     
     // Combine all error information
-    const fullErrorMsg = errorDetails ? `${errorMsg}. ${errorDetails}` : errorMsg
-    
+
     // Try to parse JSON if the message is JSON
     try {
       const parsed = JSON.parse(errorMsg)
@@ -109,19 +108,7 @@ export async function mintRealTokens(amount: number = 1000000000000): Promise<st
     // Check for specific errors
     const combinedMsg = (errorMsg + ' ' + errorDetails).toLowerCase()
     
-    if (combinedMsg.includes('network') || combinedMsg.includes('chain')) {
-      throw new Error('Wallet network mismatch. Please ensure your wallet is on Devnet.')
-    }
-    
-    // Check for capabilities error - contract needs to be redeployed
-    if (combinedMsg.includes('no capabilities') || 
-        combinedMsg.includes('capabilities') || 
-        combinedMsg.includes('eno_capabilities') ||
-        combinedMsg.includes('burn/mint')) {
-      throw new Error('Contract needs to be redeployed with the latest fix. Please run: .\scripts\deploy-contract.ps1')
-    }
-    
-    // Check for simulation error with more details
+    // Check for simulation error FIRST (happens before user approval)
     if (combinedMsg.includes('simulation error')) {
       // Try to extract the actual error message from simulation
       const simMatch = errorMsg.match(/Simulation error[:\s]+([^\n]+)/i) || 
@@ -134,8 +121,31 @@ export async function mintRealTokens(amount: number = 1000000000000): Promise<st
       
       if (combinedMsg.includes('generic error')) {
         console.error('Full error object:', error)
-        throw new Error('Transaction failed with a generic error. This often means:\n1. The contract needs to be redeployed (run .\\scripts\\deploy-contract.ps1)\n2. Your wallet is not on Devnet\n3. The module function does not exist\n\nModule: ' + getModuleId() + '::real_token::mint_coins')
+        console.error('Error stack:', error.stack)
+        console.error('Error code:', error.code)
+        console.error('Error details:', error.details)
+        console.error('Error data:', error.data)
+        
+        // Most likely cause: contract not redeployed
+        throw new Error(`🚨 CRITICAL: Contract needs to be redeployed!\n\nThe deployed contract at ${getModuleId()} does not have the fixed code.\n\nPlease run:\n  .\\scripts\\deploy-contract.ps1\n\nThis will deploy the updated contract that fixes the "capabilities" error.`)
       }
+    }
+    
+    // Check for capabilities error - contract needs to be redeployed
+    if (combinedMsg.includes('no capabilities') || 
+        combinedMsg.includes('capabilities') || 
+        combinedMsg.includes('eno_capabilities') ||
+        combinedMsg.includes('burn/mint')) {
+      throw new Error('Contract needs to be redeployed with the latest fix. Please run: .\scripts\deploy-contract.ps1')
+    }
+    
+    // Check for user rejection (code 4001) - this happens if user rejects the transaction
+    if (error.code === 4001 || errorMsg.includes('4001') || errorDetails.includes('4001')) {
+      throw new Error('Transaction rejected by user. Please approve the transaction in your wallet to mint REAL tokens.')
+    }
+    
+    if (combinedMsg.includes('network') || combinedMsg.includes('chain')) {
+      throw new Error('Wallet network mismatch. Please ensure your wallet is on Devnet.')
     }
     
     // If we have detailed error info, use it
@@ -159,13 +169,13 @@ export async function checkRealBalance(address: string): Promise<number> {
 
   // Query coin store for REAL token balance
   try {
-    const { Aptos, AptosConfig, Network, AccountAddress } = await import('@aptos-labs/ts-sdk')
+    const { Aptos, AptosConfig, Network } = await import('@aptos-labs/ts-sdk')
     const config = new AptosConfig({ network: Network.DEVNET })
     const aptos = new Aptos(config)
     
     const coinType = `${getModuleId()}::real_token::REAL`
     const coinStore = await aptos.getAccountCoinAmount({
-      accountAddress: address as AccountAddress,
+      accountAddress: address,
       coinType
     })
     
