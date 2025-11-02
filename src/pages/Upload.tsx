@@ -6,7 +6,7 @@ import { mintRealityNFT } from '../services/aptos'
 import { analyzeEvent } from '../services/ai'
 
 export default function Upload() {
-  const { address, connected, aptos } = useWallet()
+  const { address, connected } = useWallet()
   const [file, setFile] = useState<File | null>(null)
   const [preview, setPreview] = useState<string | null>(null)
   const [description, setDescription] = useState('')

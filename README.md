@@ -1,5 +1,7 @@
 # RealityNet — Blockchain-Backed Proof-of-Reality dApp
 
+**Aptos Devnet Contract Address: `0x3df1b91e01acffa234d7824f03937bf98fc5cc254d580ac6290796ac5a2b7705`**
+
 Instagram-like social platform where users stake REAL tokens on whether news/events are correct or incorrect.
 
 ## Quick Start
@@ -17,23 +19,32 @@ npx prisma migrate dev --name init
 cd ..
 ```
 
-### 3. Start Backend
+### 3. Deploy Smart Contracts (if not already deployed)
+```bash
+# Ensure you have the Aptos CLI installed and configured for Devnet
+cd aptos
+aptos move compile --named-addresses realitynet=0x3df1b91e01acffa234d7824f03937bf98fc5cc254d580ac6290796ac5a2b7705
+aptos move publish --named-addresses realitynet=0x3df1b91e01acffa234d7824f03937bf98fc5cc254d580ac6290796ac5a2b7705 --profile default
+cd ..
+```
+
+### 4. Start Backend
 ```bash
 cd backend
 npm run dev
 ```
 
-### 4. Start Frontend (in new terminal)
+### 5. Start Frontend (in new terminal)
 ```bash
 npm run dev
 ```
 
-### 5. Mint REAL Tokens (For Staking)
+### 6. Mint REAL Tokens (For Staking)
 ```powershell
 # Windows PowerShell
 .\scripts\mint-real.ps1
 
-# Or manually:
+# Or manually (ensure your wallet is connected to Devnet and has APT for gas):
 cd aptos
 aptos move run --function-id "0x3df1b91e01acffa234d7824f03937bf98fc5cc254d580ac6290796ac5a2b7705::real_token::mint_coins" --args u64:1000000000000 --profile default
 ```
@@ -70,11 +81,6 @@ Mint REAL tokens using the script above or the "Get REAL Tokens" button in the a
 - `http://localhost:4000/api/stakes` - Stake on posts
 - `http://localhost:4000/api/users` - User profiles, follows, likes
 
-## Deployed Contracts
-
-**Network**: Aptos Devnet  
-**Address**: `0x3df1b91e01acffa234d7824f03937bf98fc5cc254d580ac6290796ac5a2b7705`
-
 ## Troubleshooting
 
 ### "Insufficient balance" when staking
@@ -85,4 +91,3 @@ Mint REAL tokens using the script above or the "Get REAL Tokens" button in the a
 
 ### Frontend not connecting
 → Make sure backend is running on port 4000
-# reality-net

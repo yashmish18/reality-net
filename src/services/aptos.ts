@@ -221,12 +221,5 @@ export async function createDAOProposal(
   }
 }
 
-export async function getAccount(aptos: Aptos, address: string): Promise<Account | null> {
-  try {
-    const accountData = await aptos.getAccountInfo({ accountAddress: address })
-    return accountData as any
-  } catch {
-    return null
-  }
-}
+
 

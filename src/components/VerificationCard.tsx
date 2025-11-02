@@ -20,7 +20,7 @@ export default function VerificationCard({
   verifierCount,
   challengeCount,
 }: VerificationCardProps) {
-  const { address, connected, aptos } = useWallet()
+  const { address, connected } = useWallet()
   const [realBalance, setRealBalance] = useState<number | null>(null)
   const [checkingBalance, setCheckingBalance] = useState(false)
 

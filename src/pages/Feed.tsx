@@ -6,7 +6,7 @@ import { stakeForVerification } from '../services/aptos'
 import { checkRealBalance } from '../services/realToken'
 
 export default function Feed() {
-  const { connected, address, aptos } = useWallet()
+  const { connected, address } = useWallet()
   const [posts, setPosts] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
   const [realBalance, setRealBalance] = useState<number | null>(null)

@@ -4,7 +4,7 @@ import { useWallet } from '../contexts/WalletContext'
 import { createDAOProposal } from '../services/aptos'
 
 export default function DAO() {
-  const { address, connected, aptos } = useWallet()
+  const { connected } = useWallet()
   const [proposals, setProposals] = useState<any[]>([])
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
