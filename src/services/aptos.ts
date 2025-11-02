@@ -1,4 +1,3 @@
-import { Aptos, Account } from '@aptos-labs/ts-sdk'
 import { getModuleId } from './contracts'
 
 export async function mintRealityNFT(
