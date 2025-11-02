@@ -30,7 +30,7 @@ export default function DAO() {
 
     setCreating(true)
     try {
-      await createDAOProposal(aptos, address!, title, description)
+      await createDAOProposal(title, description)
       alert('Proposal created successfully!')
       setTitle('')
       setDescription('')

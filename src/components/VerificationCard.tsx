@@ -61,7 +61,7 @@ export default function VerificationCard({
         return
       }
 
-      await stakeForVerification(aptos, address!, stakeAmount, tokenId)
+      await stakeForVerification(address!, stakeAmount, tokenId)
       alert(`${isVerification ? 'Verification' : 'Challenge'} staked successfully!`)
       // Refresh balance after staking
       await checkBalance()

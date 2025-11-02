@@ -176,7 +176,7 @@ export async function checkRealBalance(address: string): Promise<number> {
     const coinType = `${getModuleId()}::real_token::REAL`
     const coinStore = await aptos.getAccountCoinAmount({
       accountAddress: address,
-      coinType
+      coinType: coinType as any
     })
     
     return Number(coinStore)

@@ -55,7 +55,7 @@ export default function Upload() {
       const ipfsCID = await uploadToIPFS(file)
       
       // AI analysis
-      const analysis = await analyzeEvent(description, mediaHash, location)
+      const analysis = await analyzeEvent()
       
       if (analysis.contradiction_detected) {
         alert('AI detected potential contradictions. Please verify your upload.')
@@ -65,8 +65,6 @@ export default function Upload() {
 
       // Mint Reality NFT
       const txHash = await mintRealityNFT(
-        aptos,
-        address!,
         mediaHash,
         ipfsCID,
         location.lat,

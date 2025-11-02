@@ -104,7 +104,7 @@ export default function Feed() {
 
     try {
       // First stake on-chain
-      const txHash = await stakeForVerification(aptos, address, amount, postId)
+      const txHash = await stakeForVerification(address, amount, postId)
       
       // Then record in database
       const token = localStorage.getItem('token')
