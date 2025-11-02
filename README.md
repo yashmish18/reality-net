@@ -1,8 +1,29 @@
 # RealityNet — Blockchain-Backed Proof-of-Reality dApp
 
 **Aptos Devnet Contract Address: `0x3df1b91e01acffa234d7824f03937bf98fc5cc254d580ac6290796ac5a2b7705`**
+<img width="1699" height="901" alt="image" src="https://github.com/user-attachments/assets/bcd9611a-a57b-49dd-b088-ea5719b15f35" />
+<img width="1809" height="893" alt="image" src="https://github.com/user-attachments/assets/d76cad24-b8ef-461c-80d9-47d965ac1267" />
+<img width="1731" height="949" alt="image" src="https://github.com/user-attachments/assets/a9151904-901f-4eff-b2f1-0b672a5e027b" />
+<img width="1440" height="1079" alt="image" src="https://github.com/user-attachments/assets/07c3cdbf-9f99-45e2-a388-93b8734105f8" />
+
+
+
 
 Instagram-like social platform where users stake REAL tokens on whether news/events are correct or incorrect.
+
+# RealityNet
+
+Aptos Devnet Contract Address: `0xe23271845ae90b84415dc51d813ce44ec5ce3665120869416bfef1b425dd0317`
+
+RealityNet is a decentralized application (dApp) that functions as an Instagram-like social platform. It allows users to engage with news and events by staking 'REAL' tokens to verify or challenge the authenticity of information. The platform aims to create a blockchain-backed proof-of-reality system where community consensus, driven by token staking, determines the veracity of shared content.
+
+## How it Works:
+
+1.  **Content Sharing:** Users can upload and share real-world events and news, similar to a social media feed.
+2.  **Staking for Verification:** Other users can stake 'REAL' tokens on these posts to indicate whether they believe the information is 'correct' or 'incorrect'. This staking mechanism acts as a vote of confidence or skepticism.
+3.  **Consensus and Reality:** The collective staking actions of the community contribute to a decentralized consensus on the authenticity of the shared reality. Posts with a higher stake on 'correct' are considered more verified, while those with significant 'incorrect' stakes are challenged.
+4.  **Tokenomics:** 'REAL' tokens are central to the ecosystem, used for staking, and potentially for rewards or governance within the platform.
+5.  **Transparency:** All staking actions and content verification processes are recorded on the Aptos blockchain, ensuring transparency and immutability.
 
 ## Quick Start
 
