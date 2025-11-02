@@ -1,0 +1,151 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String   @id @default(cuid())
+  walletAddress String   @unique
+  username      String?  @unique
+  displayName   String?
+  bio           String?
+  avatar        String?
+  aptosAddress  String   @unique
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  posts         Post[]
+  comments      Comment[]
+  likes         Like[]
+  stakes        Stake[]
+  followers     Follow[] @relation("UserFollowers")
+  following     Follow[] @relation("UserFollowing")
+  
+  @@index([walletAddress])
+  @@index([aptosAddress])
+}
+
+model Post {
+  id            String   @id @default(cuid())
+  creatorId     String
+  creator       User     @relation(fields: [creatorId], references: [id], onDelete: Cascade)
+  
+  mediaHash     String
+  ipfsCID       String
+  mediaType     String   // "image" | "video"
+  
+  latitude      Float?
+  longitude     Float?
+  locationName  String?
+  
+  eventType     String?
+  description   String
+  title         String?
+  
+  tokenId       String?  @unique // On-chain NFT token ID
+  
+  verified      Boolean  @default(false)
+  verifierCount Int      @default(0)
+  challengerCount Int    @default(0)
+  
+  authenticityScore Float?  // AI-generated score
+  trendingScore     Float?  @default(0)
+  
+  totalStakedCorrect   BigInt @default(0)
+  totalStakedIncorrect BigInt @default(0)
+  
+  resolved          Boolean @default(false)
+  resolutionCorrect Boolean?
+  
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  comments      Comment[]
+  likes         Like[]
+  stakes        Stake[]
+  
+  @@index([creatorId])
+  @@index([createdAt])
+  @@index([verified])
+  @@index([trendingScore])
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  postId    String
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@index([postId])
+  @@index([userId])
+}
+
+model Like {
+  id        String   @id @default(cuid())
+  postId    String
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  createdAt DateTime @default(now())
+  
+  @@unique([postId, userId])
+  @@index([postId])
+  @@index([userId])
+}
+
+model Stake {
+  id        String   @id @default(cuid())
+  postId    String
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  amount    BigInt
+  stakeType String   // "correct" | "incorrect"
+  txHash    String?  @unique // On-chain transaction hash
+  
+  createdAt DateTime @default(now())
+  
+  @@unique([postId, userId, stakeType])
+  @@index([postId])
+  @@index([userId])
+}
+
+model Follow {
+  id          String   @id @default(cuid())
+  followerId  String
+  follower    User     @relation("UserFollowers", fields: [followerId], references: [id], onDelete: Cascade)
+  followingId String
+  following   User     @relation("UserFollowing", fields: [followingId], references: [id], onDelete: Cascade)
+  
+  createdAt   DateTime @default(now())
+  
+  @@unique([followerId, followingId])
+  @@index([followerId])
+  @@index([followingId])
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  userId    String
+  type      String   // "like" | "comment" | "stake" | "follow" | "verification"
+  postId    String?
+  fromUserId String?
+  message   String
+  read      Boolean  @default(false)
+  
+  createdAt DateTime @default(now())
+  
+  @@index([userId, read])
+}
+
